@@ -1,3 +1,16 @@
+ack-angular-mobiscroll
+mobiscroll-src-copy
+*.css.map
+www/index.js.map
+etc
+styles.css.map
+js_modules
+.ack-webpack-temp
+aot/
+.DS_Store
+updaters
+
+
 # Logs
 logs
 *.log

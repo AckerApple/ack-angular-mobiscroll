@@ -1,0 +1,58 @@
+{
+  "name": "ack-angular-mobiscroll",
+  "version": "0.0.0",
+  "description": "Angular wrapper for Mobiscroll. Does NOT include a copy of Mobiscroll",
+  "typings": "dist/index.d.ts",
+  "main": "dist/index.js",
+  "scripts": {
+    "compile:aot": "npm-run-all compile:aot:copy compile:aot:ngc",
+    "compile:aot:copy": "ncp ./src ./example/src/ack-angular-mobiscroll",
+    "compile:aot:ngc": "ngc --project example/tsconfig.aot.json",
+    "build": "npm-run-all build:dist build:example",
+    "build:example": "npm-run-all compile:aot build:js",
+    "build:js": "ack-webpack example/index.aot.ts example/www/index.js --production --project example/tsconfig.json",
+    "build:dist": "ngc --declaration --project src",
+
+    "watch": "npm-run-all --parallel watch:example watch:dist",
+    "watch:example": "ack-webpack example/index.ts example/www/index.js --watch --browser=example/www/ --project example/tsconfig.json --html5Mode",
+    "watch:dist": "watch 'npm-run-all build:dist compile:aot' src/",
+
+    "ack-webpack": "ack-webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AckerApple/ack-angular-mobiscroll.git"
+  },
+  "keywords": [
+    "angular",
+    "mobiscroll",
+    "calendar",
+    "widget",
+    "date-picker",
+    "picker"
+  ],
+  "author": "Acker Apple",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AckerApple/ack-angular-mobiscroll/issues"
+  },
+  "homepage": "https://github.com/AckerApple/ack-angular-mobiscroll#readme",
+  "devDependencies": {
+    "@angular/common": "^4.1.3",
+    "@angular/compiler": "^4.1.3",
+    "@angular/compiler-cli": "^4.1.3",
+    "@angular/core": "^4.1.3",
+    "@angular/forms": "^4.1.3",
+    "@angular/platform-browser": "^4.1.3",
+    "@angular/platform-browser-dynamic": "^4.1.3",
+    "ack-webpack": "^1.1.36",
+    "core-js": "^2.4.1",
+    "npm-run-all": "^4.0.2",
+    "reflect-metadata": "^0.1.10",
+    "rxjs": "^5.4.0",
+    "ts-loader": "^2.1.0",
+    "typescript": "^2.3.3",
+    "webpack": "^2.6.1",
+    "zone.js": "^0.8.11"
+  }
+}
