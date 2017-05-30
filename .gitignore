@@ -1,3 +1,7 @@
+.DS_Store
+*.js.map
+updaters
+
 # Logs
 logs
 *.log
