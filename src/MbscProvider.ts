@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core"
 
-const memory = {mobiscroll:null}
+const memory = {mobiscroll:window['mobiscroll']}
 
 @Injectable() export class MbscProvider{
   constructor(){
@@ -13,7 +13,7 @@ const memory = {mobiscroll:null}
     memory.mobiscroll = mobiscroll
   }
 
-  getMobiscroll() : {date:Function} {
+  getMobiscroll() : {date:Function, datetime:Function, time:Function, calendar:Function} {
     if(memory.mobiscroll){
       this.getMobiscroll = alwaysGetMobiscroll
       return memory.mobiscroll

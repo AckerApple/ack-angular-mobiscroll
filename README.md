@@ -1,12 +1,21 @@
 # ack-angular-mobiscroll
 Angular wrapper for Mobiscroll. Mimics the paid version of Mobiscroll's Angular wrapper. Does NOT include mobiscroll framework.
 
+[Demos and Examples](https://ackerapple.github.io/ack-angular-mobiscroll/)
+
 ### Table of Contents
+- [To Mobiscroll](#to-mobiscroll)
 - [Installation](#installation)
 - [Importing](#Importing)
 - [Supported Modules](#supported-modules)
   - [Calendar](#calendar)
 - [History](#history)
+- [Resources](#resources)
+
+## To Mobiscroll
+I've read the EULA, very carefully, that I have agreed to when I bought my paid copy of Mobiscroll. This github package does NOT include the mobiscroll source code.
+
+My demo and example page, is NOT a github distribution channel, but does contain my paid copy of mobiscroll as it is an educational and fundraising page for myself.
 
 ## Installation
 ```bash
@@ -25,9 +34,8 @@ import { Component, NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { MbscModule, MbscProvider } from "ack-angular-mobiscroll"
 
+// Supply your piad copy of mobiscroll. Must do this OR have window.mobiscroll available
 import * as mobiscroll from "./my-mobiscroll-paid-copy"
-
-//union of mobiscroll-to-wrapper
 MbscProvider.setMobiscroll(mobiscroll)
 
 @Component({
@@ -98,3 +106,7 @@ export class MyExampleComponent {
 ## History
 
 5/30/17 - I, Acker Apple, have only ever used the Calendar module of Mobiscroll. I disagree with Mobiscroll's approach to many things, especially it's paid platform. The mobiscroll paid platform, which I've paid into, requires you to [download](https://download.mobiscroll.com) file updates via a login (no npm update commands). Mobiscroll does have an [npmjs.org](npmjs.org) package and github page but they are limited incomplete versions of the paid Mobiscroll code.
+
+## Resources
+
+- [Mobiscroll EULA](http://help.mobiscroll.com/eula-privacy-and-terms/eula-end-user-license-agreement)

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var memory = { mobiscroll: null };
+var memory = { mobiscroll: window['mobiscroll'] };
 var MbscProvider = (function () {
     function MbscProvider() {
         if (memory.mobiscroll) {
