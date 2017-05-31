@@ -1,0 +1,12 @@
+.code-sample {
+  display: block;
+  color: #393318;
+  /*width: 100%;*/
+  overflow: auto;
+  font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,sans-serif;
+  background-color: #e5e7e7;
+  border:0;
+  padding:.5em;
+  font-size:.9em;
+  line-height:1.6em;
+}
