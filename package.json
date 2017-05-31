@@ -12,11 +12,9 @@
     "build:example": "npm-run-all compile:aot build:js",
     "build:js": "ack-webpack example/index.aot.ts example/www/index.js --production --project example/tsconfig.json",
     "build:dist": "ngc --declaration --project src",
-
-    "watch": "npm-run-all --parallel watch:example watch:dist",
+    "watch": "npm-run-all --parallel compile:aot:copy watch:example watch:dist",
     "watch:example": "ack-webpack example/index.ts example/www/index.js --watch --browser=example/www/ --project example/tsconfig.json --html5Mode",
     "watch:dist": "watch 'npm-run-all build:dist compile:aot' src/",
-
     "ack-webpack": "ack-webpack"
   },
   "repository": {
