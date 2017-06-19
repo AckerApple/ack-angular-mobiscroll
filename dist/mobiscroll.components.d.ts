@@ -1,8 +1,13 @@
 import { EventEmitter, ElementRef } from "@angular/core";
 import { MbscProvider } from "./MbscProvider";
+export interface options {
+    onSet?: Function;
+    onMonthChange?: Function;
+}
 export declare class MobiscrollCalendar {
     ElementRef: ElementRef;
     MbscProvider: MbscProvider;
+    holdValue: any;
     inst: {
         setVal: Function;
         _value: string;
@@ -19,19 +24,16 @@ export declare class MobiscrollCalendar {
     ngModelChange: EventEmitter<{}>;
     mbscCalendar: any;
     mbscCalendarChange: EventEmitter<Date>;
-    options: {
-        onSet?: Function;
-    };
-    mbscOptions: {
-        onSet?: Function;
-    };
+    options: options;
+    mbscOptions: options;
     mbscOptionsChange: EventEmitter<{}>;
     constructor(ElementRef: ElementRef, MbscProvider: MbscProvider);
     ngOnInit(): void;
+    getValue(): any;
     createInst(): any;
-    updateVal(): void;
+    updateVal(value?: any): void;
     updateDisplay(): void;
-    updateModel(): void;
+    updateModel(date?: any): void;
     ngOnChanges(changes: any): void;
     applyConfig(config: any): void;
     ngAfterViewInit(): void;

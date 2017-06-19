@@ -25,7 +25,10 @@ import { appTemplate } from "./templates"
     dateFormat:'mm/dd/yy',
     timeFormat:'hh:ii A',
     animate:'slideup',
-    controls: ['calendar', 'time']
+    controls: ['calendar', 'time'],
+    calendarScroll:'vertical',
+    buttons:['set','clear','cancel'],
+    headerText:'Custom Header Text Here'
   }
   birthday: Date = new Date()
 
