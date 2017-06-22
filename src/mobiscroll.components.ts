@@ -39,6 +39,8 @@ export interface calInst{
   constructor(public ElementRef:ElementRef, public MbscProvider:MbscProvider){}
 
   setInstVal(val){
+    val = new Date(val)
+    if(val.toString()=='Invalid Date')return
     this.inst.setDate( new Date(val) )
     //this.inst.setVal()
   }
@@ -84,7 +86,7 @@ export interface calInst{
   }
 
   getValue(){
-    if(this.mbscCalendar && this.mbscCalendar.constructor==Date){
+    if(this.mbscCalendar && new Date(this.mbscCalendar).toString()!='Invalid Date'){
       return this.mbscCalendar
     }
 
@@ -92,7 +94,12 @@ export interface calInst{
       return this.ngModel
     }
 
-    return this.mbscCalendar
+    /* Dont do this. Mobiscroll may have default date but that doesnt mean use it as a value
+    if(this.inst){
+      return this.inst.getDate()
+    }*/
+
+    return this.mbscCalendar=='mbsc-calendar' ? null : this.mbscCalendar
   }
 
   createInst(){

@@ -24,6 +24,9 @@ var MobiscrollCalendar = (function () {
         this.mbscOptionsChange = new core_1.EventEmitter();
     }
     MobiscrollCalendar.prototype.setInstVal = function (val) {
+        val = new Date(val);
+        if (val.toString() == 'Invalid Date')
+            return;
         this.inst.setDate(new Date(val));
         //this.inst.setVal()
     };
@@ -63,13 +66,17 @@ var MobiscrollCalendar = (function () {
         setTimeout(function () { return _this.refChange.emit(_this.ref = _this); }, 0);
     };
     MobiscrollCalendar.prototype.getValue = function () {
-        if (this.mbscCalendar && this.mbscCalendar.constructor == Date) {
+        if (this.mbscCalendar && new Date(this.mbscCalendar).toString() != 'Invalid Date') {
             return this.mbscCalendar;
         }
         if (this.ngModel) {
             return this.ngModel;
         }
-        return this.mbscCalendar;
+        /* Dont do this. Mobiscroll may have default date but that doesnt mean use it as a value
+        if(this.inst){
+          return this.inst.getDate()
+        }*/
+        return this.mbscCalendar == 'mbsc-calendar' ? null : this.mbscCalendar;
     };
     MobiscrollCalendar.prototype.createInst = function () {
         return this.MbscProvider.getMobiscroll().calendar(this.ElementRef.nativeElement, this.options);
