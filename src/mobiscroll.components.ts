@@ -7,17 +7,20 @@ export interface options {
   onMonthChange?:Function
 }
 
+export interface calInst{
+  setDate:Function,
+  //setVal:Function,
+  _value:string,
+  init:Function,
+  getVal:Function,
+  handlers:{set:Function}
+}
+
 @Directive({
   selector:'[mbsc-calendar]'
 }) export class MobiscrollCalendar {
   holdValue
-  inst:{
-    setVal:Function,
-    _value:string,
-    init:Function,
-    getVal:Function,
-    handlers:{set:Function}
-  }
+  inst:calInst
   setter:Function//part of onSet override
 
   @Input('mbsc-calendar-ref') public ref
@@ -34,6 +37,11 @@ export interface options {
   @Output('mbsc-optionsChange') public mbscOptionsChange = new EventEmitter()
 
   constructor(public ElementRef:ElementRef, public MbscProvider:MbscProvider){}
+
+  setInstVal(val){
+    this.inst.setDate( new Date(val) )
+    //this.inst.setVal()
+  }
 
   ngOnInit(){
     this.options = Object.assign(this.options, this.mbscOptions)//safe options
@@ -69,7 +77,7 @@ export interface options {
     }
 
     this.inst = this.createInst()
-    this.inst.setVal( this.getValue() )
+    this.setInstVal( this.getValue() )
 
     //allow angular finish digest cycle. Avoid Expression has changed error
     setTimeout(()=>this.refChange.emit( this.ref=this ), 0)
@@ -94,7 +102,7 @@ export interface options {
   updateVal(value?){
     value = value || this.getValue()
     
-    this.inst.setVal( value )
+    this.setInstVal( value )
 
     setTimeout(()=>{
       this.updateModel(value)
@@ -125,7 +133,7 @@ export interface options {
       //this.inst.setVal( changes.mbscCalendar.currentValue )
       //this.updateModel()
       if(changes.mbscCalendar.currentValue != this.inst.getVal()){
-        this.inst.setVal(changes.mbscCalendar.currentValue)
+        this.setInstVal( changes.mbscCalendar.currentValue )
       }
       setTimeout(()=>this.updateDisplay(), 0)
     }

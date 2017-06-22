@@ -4,19 +4,20 @@ export interface options {
     onSet?: Function;
     onMonthChange?: Function;
 }
+export interface calInst {
+    setDate: Function;
+    _value: string;
+    init: Function;
+    getVal: Function;
+    handlers: {
+        set: Function;
+    };
+}
 export declare class MobiscrollCalendar {
     ElementRef: ElementRef;
     MbscProvider: MbscProvider;
     holdValue: any;
-    inst: {
-        setVal: Function;
-        _value: string;
-        init: Function;
-        getVal: Function;
-        handlers: {
-            set: Function;
-        };
-    };
+    inst: calInst;
     setter: Function;
     ref: any;
     refChange: EventEmitter<{}>;
@@ -28,6 +29,7 @@ export declare class MobiscrollCalendar {
     mbscOptions: options;
     mbscOptionsChange: EventEmitter<{}>;
     constructor(ElementRef: ElementRef, MbscProvider: MbscProvider);
+    setInstVal(val: any): void;
     ngOnInit(): void;
     getValue(): any;
     createInst(): any;

@@ -23,6 +23,10 @@ var MobiscrollCalendar = (function () {
         this.mbscOptions = {};
         this.mbscOptionsChange = new core_1.EventEmitter();
     }
+    MobiscrollCalendar.prototype.setInstVal = function (val) {
+        this.inst.setDate(new Date(val));
+        //this.inst.setVal()
+    };
     MobiscrollCalendar.prototype.ngOnInit = function () {
         var _this = this;
         this.options = Object.assign(this.options, this.mbscOptions); //safe options
@@ -54,7 +58,7 @@ var MobiscrollCalendar = (function () {
             }, 0)*/
         };
         this.inst = this.createInst();
-        this.inst.setVal(this.getValue());
+        this.setInstVal(this.getValue());
         //allow angular finish digest cycle. Avoid Expression has changed error
         setTimeout(function () { return _this.refChange.emit(_this.ref = _this); }, 0);
     };
@@ -73,7 +77,7 @@ var MobiscrollCalendar = (function () {
     MobiscrollCalendar.prototype.updateVal = function (value) {
         var _this = this;
         value = value || this.getValue();
-        this.inst.setVal(value);
+        this.setInstVal(value);
         setTimeout(function () {
             _this.updateModel(value);
             setTimeout(function () { return _this.updateDisplay(); }, 0);
@@ -101,7 +105,7 @@ var MobiscrollCalendar = (function () {
             //this.inst.setVal( changes.mbscCalendar.currentValue )
             //this.updateModel()
             if (changes.mbscCalendar.currentValue != this.inst.getVal()) {
-                this.inst.setVal(changes.mbscCalendar.currentValue);
+                this.setInstVal(changes.mbscCalendar.currentValue);
             }
             setTimeout(function () { return _this.updateDisplay(); }, 0);
         }
