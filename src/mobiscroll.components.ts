@@ -71,11 +71,6 @@ export interface calInst{
       }
 
       this.updateVal( this.inst.getVal() )
-      /*
-      setTimeout(()=>{
-        this.updateModel()
-        setTimeout(()=>this.updateDisplay(), 0)
-      }, 0)*/
     }
 
     this.inst = this.createInst()
@@ -99,7 +94,7 @@ export interface calInst{
       return this.inst.getDate()
     }*/
 
-    return this.mbscCalendar=='mbsc-calendar' ? null : this.mbscCalendar
+    return this.isValValue(this.mbscCalendar) ? this.mbscCalendar : null
   }
 
   createInst(){
@@ -133,16 +128,19 @@ export interface calInst{
     }, 0)*/
   }
 
+  isValValue(value){
+    return value && value!='mbsc-calendar' && value!='mbscCalendar'
+  }
+
   ngOnChanges(changes){
     if(!this.inst)return
 
     if(changes.mbscCalendar && changes.mbscCalendar.currentValue!=changes.mbscCalendar.previousValue){
-      //this.inst.setVal( changes.mbscCalendar.currentValue )
-      //this.updateModel()
-      if(changes.mbscCalendar.currentValue != this.inst.getVal()){
+      const valValue = this.isValValue(changes.mbscCalendar.currentValue)
+      if(valValue && changes.mbscCalendar.currentValue != this.inst.getVal()){
         this.setInstVal( changes.mbscCalendar.currentValue )
       }
-      setTimeout(()=>this.updateDisplay(), 0)
+      if(valValue)setTimeout(()=>this.updateDisplay(), 0)
     }
 
     if(changes.ngModel && changes.ngModel.currentValue!=changes.ngModel.previousValue){
@@ -165,7 +163,9 @@ export interface calInst{
   }
 
   ngAfterViewInit(){
-    setTimeout(()=>this.updateVal(), 0)
+    if(this.isValValue(this.getValue())){
+      setTimeout(()=>this.updateVal(), 0)
+    }
   }
 }
 

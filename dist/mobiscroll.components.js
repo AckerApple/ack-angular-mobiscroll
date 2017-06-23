@@ -54,11 +54,6 @@ var MobiscrollCalendar = (function () {
                 }
             }
             _this.updateVal(_this.inst.getVal());
-            /*
-            setTimeout(()=>{
-              this.updateModel()
-              setTimeout(()=>this.updateDisplay(), 0)
-            }, 0)*/
         };
         this.inst = this.createInst();
         this.setInstVal(this.getValue());
@@ -76,7 +71,7 @@ var MobiscrollCalendar = (function () {
         if(this.inst){
           return this.inst.getDate()
         }*/
-        return this.mbscCalendar == 'mbsc-calendar' ? null : this.mbscCalendar;
+        return this.isValValue(this.mbscCalendar) ? this.mbscCalendar : null;
     };
     MobiscrollCalendar.prototype.createInst = function () {
         return this.MbscProvider.getMobiscroll().calendar(this.ElementRef.nativeElement, this.options);
@@ -104,17 +99,20 @@ var MobiscrollCalendar = (function () {
           this.ElementRef.nativeElement.value=this.inst._value
         }, 0)*/
     };
+    MobiscrollCalendar.prototype.isValValue = function (value) {
+        return value && value != 'mbsc-calendar' && value != 'mbscCalendar';
+    };
     MobiscrollCalendar.prototype.ngOnChanges = function (changes) {
         var _this = this;
         if (!this.inst)
             return;
         if (changes.mbscCalendar && changes.mbscCalendar.currentValue != changes.mbscCalendar.previousValue) {
-            //this.inst.setVal( changes.mbscCalendar.currentValue )
-            //this.updateModel()
-            if (changes.mbscCalendar.currentValue != this.inst.getVal()) {
+            var valValue = this.isValValue(changes.mbscCalendar.currentValue);
+            if (valValue && changes.mbscCalendar.currentValue != this.inst.getVal()) {
                 this.setInstVal(changes.mbscCalendar.currentValue);
             }
-            setTimeout(function () { return _this.updateDisplay(); }, 0);
+            if (valValue)
+                setTimeout(function () { return _this.updateDisplay(); }, 0);
         }
         if (changes.ngModel && changes.ngModel.currentValue != changes.ngModel.previousValue) {
             this.updateVal(changes.ngModel.currentValue);
@@ -134,7 +132,9 @@ var MobiscrollCalendar = (function () {
     };
     MobiscrollCalendar.prototype.ngAfterViewInit = function () {
         var _this = this;
-        setTimeout(function () { return _this.updateVal(); }, 0);
+        if (this.isValValue(this.getValue())) {
+            setTimeout(function () { return _this.updateVal(); }, 0);
+        }
     };
     return MobiscrollCalendar;
 }());

@@ -36,6 +36,7 @@ export declare class MobiscrollCalendar {
     updateVal(value?: any): void;
     updateDisplay(): void;
     updateModel(date?: any): void;
+    isValValue(value: any): boolean;
     ngOnChanges(changes: any): void;
     applyConfig(config: any): void;
     ngAfterViewInit(): void;
