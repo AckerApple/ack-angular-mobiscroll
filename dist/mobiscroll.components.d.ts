@@ -17,7 +17,7 @@ export declare class MobiscrollCalendar {
     ElementRef: ElementRef;
     MbscProvider: MbscProvider;
     holdValue: any;
-    inst: calInst;
+    instance: calInst;
     setter: Function;
     ref: any;
     refChange: EventEmitter<{}>;

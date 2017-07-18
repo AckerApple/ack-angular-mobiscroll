@@ -17,10 +17,11 @@ export interface calInst{
 }
 
 @Directive({
-  selector:'[mbsc-calendar]'
+  selector:'[mbsc-calendar]',
+  exportAs: 'mobiscroll'
 }) export class MobiscrollCalendar {
   holdValue
-  inst:calInst
+  instance:calInst
   setter:Function//part of onSet override
 
   @Input('mbsc-calendar-ref') public ref
@@ -41,8 +42,8 @@ export interface calInst{
   setInstVal(val){
     val = new Date(val)
     if(val.toString()=='Invalid Date')return
-    this.inst.setDate( new Date(val) )
-    //this.inst.setVal()
+    this.instance.setDate( new Date(val) )
+    //this.instance.setVal()
   }
 
   ngOnInit(){
@@ -60,7 +61,7 @@ export interface calInst{
       if(orgOnSet)orgOnSet(event, inst)
 
       if(this.holdValue){
-        let newValue = this.inst.getVal()
+        let newValue = this.instance.getVal()
         if(newValue && newValue.constructor==Date){        
           newValue = new Date(newValue.setFullYear(this.holdValue.year))
           newValue = new Date(newValue.setMonth(this.holdValue.month))
@@ -70,10 +71,11 @@ export interface calInst{
         }
       }
 
-      this.updateVal( this.inst.getVal() )
+      this.updateVal( this.instance.getVal() )
     }
 
-    this.inst = this.createInst()
+    this.instance = this.createInst()
+    //this.ElementRef.nativeElement.instance = this.instance
     this.setInstVal( this.getValue() )
 
     //allow angular finish digest cycle. Avoid Expression has changed error
@@ -90,8 +92,8 @@ export interface calInst{
     }
 
     /* Dont do this. Mobiscroll may have default date but that doesnt mean use it as a value
-    if(this.inst){
-      return this.inst.getDate()
+    if(this.instance){
+      return this.instance.getDate()
     }*/
 
     return this.isValValue(this.mbscCalendar) ? this.mbscCalendar : null
@@ -113,9 +115,9 @@ export interface calInst{
   }
 
   updateDisplay(){
-    //this.mbscCalendar = this.inst.getVal()//event.valueText
+    //this.mbscCalendar = this.instance.getVal()//event.valueText
     //this.mbscCalendarChange.emit( this.mbscCalendar )
-    this.ElementRef.nativeElement.value = this.inst._value
+    this.ElementRef.nativeElement.value = this.instance._value
     //this.updateModel()
   }
 
@@ -124,7 +126,7 @@ export interface calInst{
     this.mbscCalendarChange.emit( date )
     this.ngModelChange.emit( date )
     /*setTimeout(()=>{
-      this.ElementRef.nativeElement.value=this.inst._value
+      this.ElementRef.nativeElement.value=this.instance._value
     }, 0)*/
   }
 
@@ -133,11 +135,11 @@ export interface calInst{
   }
 
   ngOnChanges(changes){
-    if(!this.inst)return
+    if(!this.instance)return
 
     if(changes.mbscCalendar && changes.mbscCalendar.currentValue!=changes.mbscCalendar.previousValue){
       const valValue = this.isValValue(changes.mbscCalendar.currentValue)
-      if(valValue && changes.mbscCalendar.currentValue != this.inst.getVal()){
+      if(valValue && changes.mbscCalendar.currentValue != this.instance.getVal()){
         this.setInstVal( changes.mbscCalendar.currentValue )
       }
       if(valValue)setTimeout(()=>this.updateDisplay(), 0)
@@ -147,9 +149,9 @@ export interface calInst{
       this.updateVal( changes.ngModel.currentValue )
       //this.mbscCalendar = changes.ngModel.currentValue
       //this.mbscCalendarChange.emit( this.mbscCalendar )
-      //this.inst.setVal( changes.ngModel.currentValue )
+      //this.instance.setVal( changes.ngModel.currentValue )
       /*setTimeout(()=>{
-        this.ElementRef.nativeElement.value=this.inst._value
+        this.ElementRef.nativeElement.value=this.instance._value
       }, 0)*/
     }
 
@@ -159,7 +161,7 @@ export interface calInst{
   }
 
   applyConfig(config){
-    this.inst.init( Object.assign(this.options, config, {onSet:this.setter}) )
+    this.instance.init( Object.assign(this.options, config, {onSet:this.setter}) )
   }
 
   ngAfterViewInit(){

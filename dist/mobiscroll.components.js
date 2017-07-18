@@ -27,8 +27,8 @@ var MobiscrollCalendar = (function () {
         val = new Date(val);
         if (val.toString() == 'Invalid Date')
             return;
-        this.inst.setDate(new Date(val));
-        //this.inst.setVal()
+        this.instance.setDate(new Date(val));
+        //this.instance.setVal()
     };
     MobiscrollCalendar.prototype.ngOnInit = function () {
         var _this = this;
@@ -45,7 +45,7 @@ var MobiscrollCalendar = (function () {
             if (orgOnSet)
                 orgOnSet(event, inst);
             if (_this.holdValue) {
-                var newValue = _this.inst.getVal();
+                var newValue = _this.instance.getVal();
                 if (newValue && newValue.constructor == Date) {
                     newValue = new Date(newValue.setFullYear(_this.holdValue.year));
                     newValue = new Date(newValue.setMonth(_this.holdValue.month));
@@ -53,9 +53,10 @@ var MobiscrollCalendar = (function () {
                     return _this.updateVal(newValue);
                 }
             }
-            _this.updateVal(_this.inst.getVal());
+            _this.updateVal(_this.instance.getVal());
         };
-        this.inst = this.createInst();
+        this.instance = this.createInst();
+        //this.ElementRef.nativeElement.instance = this.instance
         this.setInstVal(this.getValue());
         //allow angular finish digest cycle. Avoid Expression has changed error
         setTimeout(function () { return _this.refChange.emit(_this.ref = _this); }, 0);
@@ -68,8 +69,8 @@ var MobiscrollCalendar = (function () {
             return this.ngModel;
         }
         /* Dont do this. Mobiscroll may have default date but that doesnt mean use it as a value
-        if(this.inst){
-          return this.inst.getDate()
+        if(this.instance){
+          return this.instance.getDate()
         }*/
         return this.isValValue(this.mbscCalendar) ? this.mbscCalendar : null;
     };
@@ -86,9 +87,9 @@ var MobiscrollCalendar = (function () {
         }, 0);
     };
     MobiscrollCalendar.prototype.updateDisplay = function () {
-        //this.mbscCalendar = this.inst.getVal()//event.valueText
+        //this.mbscCalendar = this.instance.getVal()//event.valueText
         //this.mbscCalendarChange.emit( this.mbscCalendar )
-        this.ElementRef.nativeElement.value = this.inst._value;
+        this.ElementRef.nativeElement.value = this.instance._value;
         //this.updateModel()
     };
     MobiscrollCalendar.prototype.updateModel = function (date) {
@@ -96,7 +97,7 @@ var MobiscrollCalendar = (function () {
         this.mbscCalendarChange.emit(date);
         this.ngModelChange.emit(date);
         /*setTimeout(()=>{
-          this.ElementRef.nativeElement.value=this.inst._value
+          this.ElementRef.nativeElement.value=this.instance._value
         }, 0)*/
     };
     MobiscrollCalendar.prototype.isValValue = function (value) {
@@ -104,11 +105,11 @@ var MobiscrollCalendar = (function () {
     };
     MobiscrollCalendar.prototype.ngOnChanges = function (changes) {
         var _this = this;
-        if (!this.inst)
+        if (!this.instance)
             return;
         if (changes.mbscCalendar && changes.mbscCalendar.currentValue != changes.mbscCalendar.previousValue) {
             var valValue = this.isValValue(changes.mbscCalendar.currentValue);
-            if (valValue && changes.mbscCalendar.currentValue != this.inst.getVal()) {
+            if (valValue && changes.mbscCalendar.currentValue != this.instance.getVal()) {
                 this.setInstVal(changes.mbscCalendar.currentValue);
             }
             if (valValue)
@@ -118,9 +119,9 @@ var MobiscrollCalendar = (function () {
             this.updateVal(changes.ngModel.currentValue);
             //this.mbscCalendar = changes.ngModel.currentValue
             //this.mbscCalendarChange.emit( this.mbscCalendar )
-            //this.inst.setVal( changes.ngModel.currentValue )
+            //this.instance.setVal( changes.ngModel.currentValue )
             /*setTimeout(()=>{
-              this.ElementRef.nativeElement.value=this.inst._value
+              this.ElementRef.nativeElement.value=this.instance._value
             }, 0)*/
         }
         if (changes.mbscOptions) {
@@ -128,7 +129,7 @@ var MobiscrollCalendar = (function () {
         }
     };
     MobiscrollCalendar.prototype.applyConfig = function (config) {
-        this.inst.init(Object.assign(this.options, config, { onSet: this.setter }));
+        this.instance.init(Object.assign(this.options, config, { onSet: this.setter }));
     };
     MobiscrollCalendar.prototype.ngAfterViewInit = function () {
         var _this = this;
@@ -140,7 +141,8 @@ var MobiscrollCalendar = (function () {
 }());
 MobiscrollCalendar.decorators = [
     { type: core_1.Directive, args: [{
-                selector: '[mbsc-calendar]'
+                selector: '[mbsc-calendar]',
+                exportAs: 'mobiscroll'
             },] },
 ];
 /** @nocollapse */

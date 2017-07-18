@@ -13,7 +13,7 @@ export const appTemplate = `
 
 <div style="padding:1em;display:inline-block;">
   <strong style="display:block">ngModel mbsc-calendar</strong>
-  <input [(ngModel)]="birthday" mbsc-calendar [(mbsc-calendar-ref)]="iCal0" [mbsc-options]="options" />
+  <input [(ngModel)]="birthday" mbsc-calendar #myVariable="mobiscroll" [(mbsc-calendar-ref)]="iCal0" [mbsc-options]="options" />
 </div>
 
 <div style="padding:1em;display:inline-block;">

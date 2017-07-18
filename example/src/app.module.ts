@@ -1,8 +1,8 @@
-import { MbscModule, MbscProvider } from "./ack-angular-mobiscroll"
+import { MobiscrollCalendar, MbscModule, MbscProvider } from "./ack-angular-mobiscroll"
 
 import { FormsModule }   from '@angular/forms'
 
-import { Input, Component, NgModule } from '@angular/core'
+import { ViewChild, Input, Component, NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 
 //you must have your own copy of mobiscroll
@@ -14,12 +14,12 @@ import { appTemplate } from "./templates"
   selector: 'ack-angular-mobiscroll-app',
   template: appTemplate
 }) export class AppComponent {
-  public iCal0
-  public iCal1
-  public iCal2
-  public iTime
-  public iDateTime
-  public options = {
+  iCal0
+  iCal1
+  iCal2
+  iTime
+  iDateTime
+  options = {
     theme:'mobiscroll',
     display:'center',
     dateFormat:'mm/dd/yy',

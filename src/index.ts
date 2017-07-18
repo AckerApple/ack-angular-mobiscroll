@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common'
 import { declarations as components } from "./mobiscroll.components"
 import { MbscProvider } from "./MbscProvider"
 
+export * from "./mobiscroll.components"
+
 @NgModule({
   imports:[
     CommonModule
