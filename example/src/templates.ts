@@ -52,6 +52,21 @@ export const appTemplate = `
 </div>
 
 <div style="padding:1em;display:inline-block;">
+  <strong style="display:block">Choose Buttons</strong>
+  <label for="options.set">
+    <input type="checkbox" name="options.set" id="options.set" (change)="toggleBtn('set')" [checked]="options.buttons.indexOf('set')>=0" />&nbsp;set
+  </label>
+  &nbsp;&nbsp;
+  <label for="options.clear">
+    <input type="checkbox" name="options.clear" id="options.clear" (change)="toggleBtn('clear')" [checked]="options.buttons.indexOf('clear')>=0" />&nbsp;clear
+  </label>
+  &nbsp;&nbsp;
+  <label for="options.cancel">
+    <input type="checkbox" name="options.cancel" id="options.cancel" (change)="toggleBtn('cancel')" [checked]="options.buttons.indexOf('cancel')>=0" />&nbsp;cancel
+  </label>
+</div>
+
+<div style="padding:1em;display:inline-block;">
   <strong style="display:block">Select Theme</strong>
   <select [(ngModel)]="options.theme" (change)="applyConfig()">
     <option value=""></option>

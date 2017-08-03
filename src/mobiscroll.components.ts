@@ -24,18 +24,18 @@ export interface calInst{
   instance:calInst
   setter:Function//part of onSet override
 
-  @Input('mbsc-calendar-ref') public ref
-  @Output('mbsc-calendar-refChange') public refChange = new EventEmitter()
+  @Input('mbsc-calendar-ref') ref
+  @Output('mbsc-calendar-refChange') refChange = new EventEmitter()
 
-  @Input() public ngModel
-  @Output() public ngModelChange = new EventEmitter()
+  @Input() ngModel
+  @Output() ngModelChange = new EventEmitter()
 
-  @Input('mbsc-calendar') public mbscCalendar
-  @Output('mbsc-calendarChange') public mbscCalendarChange = new EventEmitter<Date>()
+  @Input('mbsc-calendar') mbscCalendar
+  @Output('mbsc-calendarChange') mbscCalendarChange = new EventEmitter<Date>()
   
-  public options:options={}
-  @Input('mbsc-options') public mbscOptions:options = {}
-  @Output('mbsc-optionsChange') public mbscOptionsChange = new EventEmitter()
+  options:options={}
+  @Input('mbsc-options') mbscOptions:options = {}
+  @Output('mbsc-optionsChange') mbscOptionsChange = new EventEmitter()
 
   constructor(public ElementRef:ElementRef, public MbscProvider:MbscProvider){}
 
@@ -79,7 +79,7 @@ export interface calInst{
     this.setInstVal( this.getValue() )
 
     //allow angular finish digest cycle. Avoid Expression has changed error
-    setTimeout(()=>this.refChange.emit( this.ref=this ), 0)
+    setTimeout(()=>this.refChange.emit( this ), 0)
   }
 
   getValue(){
@@ -134,10 +134,14 @@ export interface calInst{
     return value && value!='mbsc-calendar' && value!='mbscCalendar'
   }
 
+  datesMatch(a, b){
+    return a==b || new Date(a).getTime()==new Date(b).getTime()
+  }
+
   ngOnChanges(changes){
     if(!this.instance)return
 
-    if(changes.mbscCalendar && changes.mbscCalendar.currentValue!=changes.mbscCalendar.previousValue){
+    if(changes.mbscCalendar && !this.datesMatch(changes.mbscCalendar.currentValue,changes.mbscCalendar.previousValue)){
       const valValue = this.isValValue(changes.mbscCalendar.currentValue)
       if(valValue && changes.mbscCalendar.currentValue != this.instance.getVal()){
         this.setInstVal( changes.mbscCalendar.currentValue )
@@ -145,7 +149,7 @@ export interface calInst{
       if(valValue)setTimeout(()=>this.updateDisplay(), 0)
     }
 
-    if(changes.ngModel && changes.ngModel.currentValue!=changes.ngModel.previousValue){
+    if(changes.ngModel && !this.datesMatch(changes.ngModel.currentValue,changes.ngModel.previousValue)){
       this.updateVal( changes.ngModel.currentValue )
       //this.mbscCalendar = changes.ngModel.currentValue
       //this.mbscCalendarChange.emit( this.mbscCalendar )

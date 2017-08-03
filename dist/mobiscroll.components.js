@@ -59,7 +59,7 @@ var MobiscrollCalendar = (function () {
         //this.ElementRef.nativeElement.instance = this.instance
         this.setInstVal(this.getValue());
         //allow angular finish digest cycle. Avoid Expression has changed error
-        setTimeout(function () { return _this.refChange.emit(_this.ref = _this); }, 0);
+        setTimeout(function () { return _this.refChange.emit(_this); }, 0);
     };
     MobiscrollCalendar.prototype.getValue = function () {
         if (this.mbscCalendar && new Date(this.mbscCalendar).toString() != 'Invalid Date') {
@@ -103,11 +103,14 @@ var MobiscrollCalendar = (function () {
     MobiscrollCalendar.prototype.isValValue = function (value) {
         return value && value != 'mbsc-calendar' && value != 'mbscCalendar';
     };
+    MobiscrollCalendar.prototype.datesMatch = function (a, b) {
+        return a == b || new Date(a).getTime() == new Date(b).getTime();
+    };
     MobiscrollCalendar.prototype.ngOnChanges = function (changes) {
         var _this = this;
         if (!this.instance)
             return;
-        if (changes.mbscCalendar && changes.mbscCalendar.currentValue != changes.mbscCalendar.previousValue) {
+        if (changes.mbscCalendar && !this.datesMatch(changes.mbscCalendar.currentValue, changes.mbscCalendar.previousValue)) {
             var valValue = this.isValValue(changes.mbscCalendar.currentValue);
             if (valValue && changes.mbscCalendar.currentValue != this.instance.getVal()) {
                 this.setInstVal(changes.mbscCalendar.currentValue);
@@ -115,7 +118,7 @@ var MobiscrollCalendar = (function () {
             if (valValue)
                 setTimeout(function () { return _this.updateDisplay(); }, 0);
         }
-        if (changes.ngModel && changes.ngModel.currentValue != changes.ngModel.previousValue) {
+        if (changes.ngModel && !this.datesMatch(changes.ngModel.currentValue, changes.ngModel.previousValue)) {
             this.updateVal(changes.ngModel.currentValue);
             //this.mbscCalendar = changes.ngModel.currentValue
             //this.mbscCalendarChange.emit( this.mbscCalendar )

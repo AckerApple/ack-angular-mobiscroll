@@ -6,7 +6,7 @@ import { ViewChild, Input, Component, NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 
 //you must have your own copy of mobiscroll
-import * as mobiscroll from "./mobiscroll-src-copy/mobiscroll.custom-3.2.0.min.js"
+import * as mobiscroll from "./mobiscroll-src-copy/mobiscroll.custom-3.2.3.min.js"
 MbscProvider.setMobiscroll(mobiscroll)
 
 import { appTemplate } from "./templates"
@@ -42,6 +42,16 @@ import { appTemplate } from "./templates"
     this.iCal2.applyConfig(this.options)
     this.iTime.applyConfig(this.options)
     this.iDateTime.applyConfig(this.options)
+  }
+
+  toggleBtn(name){
+    const index = this.options.buttons.indexOf(name)
+    if(index>=0){
+      this.options.buttons.splice(index,1)
+    }else{
+      this.options.buttons.push(name)
+    }
+    this.applyConfig()
   }
 }
 
