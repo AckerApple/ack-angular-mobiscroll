@@ -47,6 +47,7 @@ export interface calInst{
   }
 
   ngOnInit(){
+    this.mbscOptions = this.mbscOptions || {}
     this.options = Object.assign(this.options, this.mbscOptions)//safe options
     
     const orgOnMonthChange = this.options.onMonthChange

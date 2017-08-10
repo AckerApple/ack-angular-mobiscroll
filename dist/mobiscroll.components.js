@@ -32,6 +32,7 @@ var MobiscrollCalendar = (function () {
     };
     MobiscrollCalendar.prototype.ngOnInit = function () {
         var _this = this;
+        this.mbscOptions = this.mbscOptions || {};
         this.options = Object.assign(this.options, this.mbscOptions); //safe options
         var orgOnMonthChange = this.options.onMonthChange;
         this.options.onMonthChange = function (event, inst) {

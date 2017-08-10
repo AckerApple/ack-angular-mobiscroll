@@ -1,6 +1,10 @@
 # ack-angular-mobiscroll - Change Log
 All notable changes to this project will be documented here.
 
+## [1.0.2] - 2017-08-10
+### Fixed
+- no options error
+
 ## [1.0.1] - 2017-07-18
 ### Changed
 - [(ref)] is still two way binded but input is ignored

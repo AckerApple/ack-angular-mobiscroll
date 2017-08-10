@@ -1,6 +1,6 @@
 {
   "name": "ack-angular-mobiscroll",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Angular wrapper for Mobiscroll. Does NOT include a copy of Mobiscroll",
   "typings": "dist/index.d.ts",
   "main": "dist/index.js",
