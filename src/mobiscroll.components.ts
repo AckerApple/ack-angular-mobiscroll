@@ -116,19 +116,26 @@ export interface calInst{
   }
 
   updateDisplay(){
-    //this.mbscCalendar = this.instance.getVal()//event.valueText
-    //this.mbscCalendarChange.emit( this.mbscCalendar )
     this.ElementRef.nativeElement.value = this.instance._value
-    //this.updateModel()
   }
 
   updateModel(date?){
     date = this.ngModel = this.mbscCalendar = date || this.getValue()
     this.mbscCalendarChange.emit( date )
     this.ngModelChange.emit( date )
-    /*setTimeout(()=>{
-      this.ElementRef.nativeElement.value=this.instance._value
-    }, 0)*/
+
+    const form = getParentByTagName(this.ElementRef.nativeElement,'form')
+    if(form)this.fireFormEvents(form)
+  }
+
+  fireFormEvents(form){
+    let event = document.createEvent("HTMLEvents");
+    event.initEvent("input", true, true);
+    form.dispatchEvent(event)
+
+    event = document.createEvent("HTMLEvents");
+    event.initEvent("change", true, true);
+    form.dispatchEvent(event)
   }
 
   isValValue(value){
@@ -152,12 +159,6 @@ export interface calInst{
 
     if(changes.ngModel && !this.datesMatch(changes.ngModel.currentValue,changes.ngModel.previousValue)){
       this.updateVal( changes.ngModel.currentValue )
-      //this.mbscCalendar = changes.ngModel.currentValue
-      //this.mbscCalendarChange.emit( this.mbscCalendar )
-      //this.instance.setVal( changes.ngModel.currentValue )
-      /*setTimeout(()=>{
-        this.ElementRef.nativeElement.value=this.instance._value
-      }, 0)*/
     }
 
     if(changes.mbscOptions){
@@ -224,3 +225,20 @@ export const declarations = [
   MobiscrollDateTime,
   MobiscrollTime
 ]
+
+
+export function getParentByTagName(node, tagname) {
+  let parent;
+  if (node === null || tagname === '') return;
+  parent  = node.parentNode;
+  tagname = tagname.toUpperCase();
+
+  while (parent && parent.tagName !== "HTML") {
+    if (parent.tagName === tagname) {
+      return parent;
+    }
+    parent = parent.parentNode;
+  }
+
+  return;
+}

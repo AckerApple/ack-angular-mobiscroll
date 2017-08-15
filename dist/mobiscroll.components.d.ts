@@ -36,6 +36,7 @@ export declare class MobiscrollCalendar {
     updateVal(value?: any): void;
     updateDisplay(): void;
     updateModel(date?: any): void;
+    fireFormEvents(form: any): void;
     isValValue(value: any): boolean;
     datesMatch(a: any, b: any): boolean;
     ngOnChanges(changes: any): void;
@@ -64,3 +65,4 @@ export declare class MobiscrollTime extends MobiscrollCalendar {
     createInst(): any;
 }
 export declare const declarations: typeof MobiscrollCalendar[];
+export declare function getParentByTagName(node: any, tagname: any): any;

@@ -88,18 +88,23 @@ var MobiscrollCalendar = (function () {
         }, 0);
     };
     MobiscrollCalendar.prototype.updateDisplay = function () {
-        //this.mbscCalendar = this.instance.getVal()//event.valueText
-        //this.mbscCalendarChange.emit( this.mbscCalendar )
         this.ElementRef.nativeElement.value = this.instance._value;
-        //this.updateModel()
     };
     MobiscrollCalendar.prototype.updateModel = function (date) {
         date = this.ngModel = this.mbscCalendar = date || this.getValue();
         this.mbscCalendarChange.emit(date);
         this.ngModelChange.emit(date);
-        /*setTimeout(()=>{
-          this.ElementRef.nativeElement.value=this.instance._value
-        }, 0)*/
+        var form = getParentByTagName(this.ElementRef.nativeElement, 'form');
+        if (form)
+            this.fireFormEvents(form);
+    };
+    MobiscrollCalendar.prototype.fireFormEvents = function (form) {
+        var event = document.createEvent("HTMLEvents");
+        event.initEvent("input", true, true);
+        form.dispatchEvent(event);
+        event = document.createEvent("HTMLEvents");
+        event.initEvent("change", true, true);
+        form.dispatchEvent(event);
     };
     MobiscrollCalendar.prototype.isValValue = function (value) {
         return value && value != 'mbsc-calendar' && value != 'mbscCalendar';
@@ -121,12 +126,6 @@ var MobiscrollCalendar = (function () {
         }
         if (changes.ngModel && !this.datesMatch(changes.ngModel.currentValue, changes.ngModel.previousValue)) {
             this.updateVal(changes.ngModel.currentValue);
-            //this.mbscCalendar = changes.ngModel.currentValue
-            //this.mbscCalendarChange.emit( this.mbscCalendar )
-            //this.instance.setVal( changes.ngModel.currentValue )
-            /*setTimeout(()=>{
-              this.ElementRef.nativeElement.value=this.instance._value
-            }, 0)*/
         }
         if (changes.mbscOptions) {
             this.applyConfig(changes.mbscOptions.currentValue);
@@ -252,4 +251,19 @@ exports.declarations = [
     MobiscrollDateTime,
     MobiscrollTime
 ];
+function getParentByTagName(node, tagname) {
+    var parent;
+    if (node === null || tagname === '')
+        return;
+    parent = node.parentNode;
+    tagname = tagname.toUpperCase();
+    while (parent && parent.tagName !== "HTML") {
+        if (parent.tagName === tagname) {
+            return parent;
+        }
+        parent = parent.parentNode;
+    }
+    return;
+}
+exports.getParentByTagName = getParentByTagName;
 //# sourceMappingURL=mobiscroll.components.js.map
